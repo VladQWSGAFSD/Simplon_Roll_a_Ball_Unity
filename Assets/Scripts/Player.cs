@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
-<<<<<<< HEAD
 public class Player : MonoBehaviour
 {
     private Rigidbody _rigidbody;
@@ -23,16 +22,6 @@ public class Player : MonoBehaviour
     public delegate void SceneEvent(int destroyedEnemies, int requiredEnemies);
     public static event SceneEvent OnScene;
     #endregion
-=======
-
-public class Player : MonoBehaviour
-{
-    private Rigidbody _rigidbody;
-    private int ScoreValue = 0;
-    [SerializeField] private TMP_Text _scoreText;
-    [SerializeField] private ScenarioData _scenario;
-    [SerializeField] private GameObject _wallPrefab;
->>>>>>> 00381690acf35c19081922c1a1edf84c2c8f560c
     void Start()
     {
         if (SceneManager.GetActiveScene().buildIndex != 0)
@@ -41,13 +30,9 @@ public class Player : MonoBehaviour
             _enemiesToDestroy = PlayerPrefs.GetInt("Require");
         }
         _rigidbody = GetComponent<Rigidbody>();
-<<<<<<< HEAD
         destroyText.text = "You need to destroy " + _enemiesToDestroy + " enemies";
         scoreText.text = "Score: " +_scoreValue;
 
-=======
-        _scoreText.text = "Score : "+ScoreValue;
->>>>>>> 00381690acf35c19081922c1a1edf84c2c8f560c
     }
 
     void Update()
@@ -93,18 +78,4 @@ public class Player : MonoBehaviour
         Instantiate(scenarioWalls.WallePrefab, scenarioWalls.Walls[_destroyedEnemies].position, scenarioWalls.Walls[_destroyedEnemies].rotation);
     }
 
-<<<<<<< Updated upstream
-=======
-    private void UpdateScore()
-    {
-        ScoreValue++;
-        PlayerPrefs.SetString("Score", "Score : " + ScoreValue.ToString());
-        _scoreText.text = PlayerPrefs.GetString("Score");
-        Instantiate(_wallPrefab, _scenario.FirstWalls[0], Quaternion.identity);
-        if(ScoreValue == 8)
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        }
-    }
->>>>>>> Stashed changes
 }

@@ -19,8 +19,3 @@ Explication des scriptableobjects
 Demande :
 - utilisation des scriptable object pour faire apparaitre des groupes de murs lorsque on touche une target
 - dans le deuxième niveau nous allons utiliser un autre scriptableobject avec une configuration plus "difficile"
-
-## Ressources :
-
-- PlayersPrefs : https://docs.unity3d.com/ScriptReference/PlayerPrefs.html
-- ScriptableObjects : https://docs.unity3d.com/Manual/class-ScriptableObject.html
