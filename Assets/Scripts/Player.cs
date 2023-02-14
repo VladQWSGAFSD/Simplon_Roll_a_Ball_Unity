@@ -8,9 +8,12 @@ public class Player : MonoBehaviour
     private Rigidbody _rigidbody;
     private int _scoreValue = 0;
     private int _destroyedEnemies = 0;
-    private int _enemiesToDestroy = 2;
+    private int _enemiesToDestroy = 10;
+    private float lifeSpan = 3f;
+    [SerializeField] float jumpForce = 5f;
+    [SerializeField] LayerMask groundLayer;
 
-    // [SerializeField] private RequiermentsData require;
+ 
     [SerializeField] float speed = 1.0f;
     [SerializeField] TMP_Text destroyText;
     [SerializeField] TMP_Text scoreText;
@@ -31,28 +34,16 @@ public class Player : MonoBehaviour
         }
         _rigidbody = GetComponent<Rigidbody>();
         destroyText.text = "You need to destroy " + _enemiesToDestroy + " enemies";
-        scoreText.text = "Score: " +_scoreValue;
+        scoreText.text = "Score: " + _scoreValue;
 
     }
 
     void Update()
     {
-        if(Input.GetAxis("Horizontal") != 0f || Input.GetAxis("Vertical") != 0f) 
+        ContinuousJump();
+        if (Input.GetAxis("Horizontal") != 0f || Input.GetAxis("Vertical") != 0f)
         {
-            _rigidbody.AddForce(Input.GetAxis("Horizontal") * speed , 0f, Input.GetAxis("Vertical") * speed);
-        }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("Target_Trigger"))
-        {
-            Destroy(other.gameObject);
-            ChangeScore();
-            OnUpdate?.Invoke(_scoreValue);
-            scoreText.text = "Score: " + _scoreValue;
-            OnScene?.Invoke(_destroyedEnemies, _enemiesToDestroy);
-            AddWall();
+            _rigidbody.AddForce(Input.GetAxis("Horizontal") * speed * Time.deltaTime, 0f, Input.GetAxis("Vertical") * speed * Time.deltaTime);
         }
     }
 
@@ -60,22 +51,43 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Target"))
         {
-            Destroy(collision.gameObject);
             ChangeScore();
             OnUpdate?.Invoke(_scoreValue);
             scoreText.text = "Score: " + _scoreValue;
-            OnScene?.Invoke(_destroyedEnemies, _enemiesToDestroy);
-            AddWall();
+          //  OnScene?.Invoke(_destroyedEnemies, _enemiesToDestroy);
+            Destroy(collision.gameObject, lifeSpan);
         }
+
     }
+   
     private void ChangeScore()
     {
         _scoreValue++;
-        _destroyedEnemies++;
+        //_destroyedEnemies++;
     }
     private void AddWall()
     {
         Instantiate(scenarioWalls.WallePrefab, scenarioWalls.Walls[_destroyedEnemies].position, scenarioWalls.Walls[_destroyedEnemies].rotation);
     }
+    void ContinuousJump()
+    {
+        if (IsGrounded())
+        {
+            Vector3 jumpVelocity = _rigidbody.velocity;
+            jumpVelocity.y = jumpForce;
+            _rigidbody.velocity = jumpVelocity;
 
+        }
+    }
+    bool IsGrounded()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, 0.6f, groundLayer))
+        {
+            return true;
+        }
+        return false;
+        
+    }
 }
+

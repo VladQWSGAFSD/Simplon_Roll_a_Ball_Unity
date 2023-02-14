@@ -111,7 +111,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40aef21d5be97044aa9e94706c71302f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  jumpForce: 5
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
   speed: 1
+  destroyText: {fileID: 0}
+  scoreText: {fileID: 0}
   scenarioWalls: {fileID: 11400000, guid: 42f8beab65f9ec5408154600b132f951, type: 2}
 --- !u!54 &2485751822498797062
 Rigidbody:
