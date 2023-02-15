@@ -20,7 +20,6 @@ public class EventManager : MonoBehaviour
     private void UpdateScore(int ScoreValue)
     {
         PlayerPrefs.SetInt("Score", ScoreValue);
-     //   scoreText.text = "Score : " + ScoreValue;
     }
 
     private void ChangeScene(int destroyedEnemies, int requiredEnemies)
@@ -29,6 +28,7 @@ public class EventManager : MonoBehaviour
             requiredEnemies = 8;
         if (destroyedEnemies >= requiredEnemies)
         {
+
             int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
             int nextSceneIndex = currentSceneIndex + 1;
             requiredEnemies += nextSceneIndex + 1;

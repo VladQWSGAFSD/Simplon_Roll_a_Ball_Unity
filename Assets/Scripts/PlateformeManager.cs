@@ -11,7 +11,8 @@ public class PlateformeManager : MonoBehaviour
     private float safeZone = 10f;
     private int lastPrefabIndex = 0;
     private List<GameObject> activeRoads = new List<GameObject>();
-    private int lifeSpan = 3;
+    private int lifeSpan = 10;
+    private float stairsHeight = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -40,12 +41,12 @@ public class PlateformeManager : MonoBehaviour
     {
         GameObject go;
         if (prefabIndex == -1)
-            go = Instantiate(plateformePrefabs[RandomPrefabIndex()]) as GameObject;
+            go = Instantiate(plateformePrefabs[RandomPrefabIndex()]);
         else
-            go = Instantiate(plateformePrefabs[prefabIndex]) as GameObject;
+            go = Instantiate(plateformePrefabs[prefabIndex]);
 
         go.transform.SetParent(transform);
-        go.transform.position = Vector3.forward * spawnZ;
+        go.transform.position = new Vector3(0f, stairsHeight, spawnZ);
 
         // Randomize the position of the prefab
         Vector3 randomOffset = new Vector3(Random.Range(-2f, 2f), 0f, 0f);
@@ -53,7 +54,10 @@ public class PlateformeManager : MonoBehaviour
 
         spawnZ += plateformeLength;
         activeRoads.Add(go);
+
+        stairsHeight += 1f;
     }
+
 
     private void DisableRoad()
     {

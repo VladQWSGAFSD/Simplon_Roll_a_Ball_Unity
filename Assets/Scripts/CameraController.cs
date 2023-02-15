@@ -9,7 +9,7 @@ public class CameraController : MonoBehaviour
     private Vector3 moveVector;
 
     private float transition = 0.0f;
-    private float animationDuration = 3.0f;
+    private float animationDuration = 0f;
     private Vector3 animationOffset = new Vector3(0, 5, 5);
 
     void Start()

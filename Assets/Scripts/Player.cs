@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 public class Player : MonoBehaviour
 {
     private Rigidbody _rigidbody;
@@ -10,11 +11,12 @@ public class Player : MonoBehaviour
     private int _destroyedEnemies = 0;
     private int _enemiesToDestroy = 10;
     private float lifeSpan = 3f;
-    [SerializeField] float jumpForce = 5f;
+    private float movementX, movementY;
+    [SerializeField] float jumpForce = 10f;
     [SerializeField] LayerMask groundLayer;
 
  
-    [SerializeField] float speed = 1.0f;
+    [SerializeField] float speed = 5.0f;
     [SerializeField] TMP_Text destroyText;
     [SerializeField] TMP_Text scoreText;
     [SerializeField] ScenarioData scenarioWalls;
@@ -41,10 +43,6 @@ public class Player : MonoBehaviour
     void Update()
     {
         ContinuousJump();
-        if (Input.GetAxis("Horizontal") != 0f || Input.GetAxis("Vertical") != 0f)
-        {
-            _rigidbody.AddForce(Input.GetAxis("Horizontal") * speed * Time.deltaTime, 0f, Input.GetAxis("Vertical") * speed * Time.deltaTime);
-        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -57,18 +55,17 @@ public class Player : MonoBehaviour
           //  OnScene?.Invoke(_destroyedEnemies, _enemiesToDestroy);
             Destroy(collision.gameObject, lifeSpan);
         }
-
     }
    
     private void ChangeScore()
     {
         _scoreValue++;
-        //_destroyedEnemies++;
+        _destroyedEnemies++;
     }
-    private void AddWall()
-    {
-        Instantiate(scenarioWalls.WallePrefab, scenarioWalls.Walls[_destroyedEnemies].position, scenarioWalls.Walls[_destroyedEnemies].rotation);
-    }
+    //private void AddWall()
+    //{
+    //    Instantiate(scenarioWalls.WallePrefab, scenarioWalls.Walls[_destroyedEnemies].position, scenarioWalls.Walls[_destroyedEnemies].rotation);
+    //}
     void ContinuousJump()
     {
         if (IsGrounded())
@@ -89,5 +86,22 @@ public class Player : MonoBehaviour
         return false;
         
     }
-}
+    private void OnMove(InputValue movementValue)
+    {
+        Vector2 movementVector = movementValue.Get<Vector2>();
+        movementX = movementVector.x;
+        movementY = movementVector.y;
 
+    }
+    void OnJump()
+    {
+        Debug.Log("jump");
+    }
+    private void FixedUpdate()
+    {
+        Vector3 movement = new Vector3(movementX, 0f, movementY);
+        _rigidbody.AddForce(movement * speed);
+    }
+
+
+}
