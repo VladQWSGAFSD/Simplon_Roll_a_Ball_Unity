@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
     private int _scoreValue = 0;
     private int _destroyedEnemies = 0;
     private int _enemiesToDestroy = 10;
-    private float lifeSpan = 3f;
+    private float lifeSpan = 10f;
     private float movementX, movementY;
     [SerializeField] float jumpForce = 10f;
     [SerializeField] LayerMask groundLayer;

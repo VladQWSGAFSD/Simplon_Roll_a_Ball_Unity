@@ -14,30 +14,28 @@ public class PlateformeManager : MonoBehaviour
     private int lifeSpan = 10;
     private float stairsHeight = 0;
 
-    // Start is called before the first frame update
     void Start()
     {
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         for (int i = 0; i < numRoadsOnScreen; i++)
         {
             if (i < 2)
-                SpawnRoad(0);
+                SpawnPlateform(0);
             else
-                SpawnRoad();
+                SpawnPlateform();
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (playerTransform.position.z - safeZone > (spawnZ - numRoadsOnScreen * plateformeLength))
         {
-            SpawnRoad();
-            DisableRoad();
+            SpawnPlateform();
+            DeletePlateform();
         }
     }
 
-    private void SpawnRoad(int prefabIndex = -1)
+    private void SpawnPlateform(int prefabIndex = -1)
     {
         GameObject go;
         if (prefabIndex == -1)
@@ -52,14 +50,14 @@ public class PlateformeManager : MonoBehaviour
         Vector3 randomOffset = new Vector3(Random.Range(-2f, 2f), 0f, 0f);
         go.transform.position += randomOffset;
 
-        spawnZ += plateformeLength;
         activeRoads.Add(go);
 
-        stairsHeight += 1f;
+        spawnZ += plateformeLength;
+        stairsHeight += Random.Range(1f, 2f);
     }
 
 
-    private void DisableRoad()
+    private void DeletePlateform()
     {
         Destroy(activeRoads[0], lifeSpan);
         activeRoads.RemoveAt(0);
