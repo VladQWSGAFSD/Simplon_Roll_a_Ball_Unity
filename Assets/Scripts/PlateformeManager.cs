@@ -5,39 +5,39 @@ public class PlateformeManager : MonoBehaviour
 {
     public GameObject[] plateformePrefabs;
     private Transform playerTransform;
-    private float spawnZ = 0f;
+    private float spawnZ, spawnY, spawnX = 0f;
     private float plateformeLength = 7f;
-    private int numRoadsOnScreen = 4;
-    private float safeZone = 10f;
+    private int numPlatsOnScreen = 4;
+   // private float safeZone = 0f;
     private int lastPrefabIndex = 0;
-    private List<GameObject> activeRoads = new List<GameObject>();
+    private List<GameObject> activePlateforms = new List<GameObject>();
     private int lifeSpan = 10;
-    private float stairsHeight = 0;
 
-    // Start is called before the first frame update
+
+
     void Start()
     {
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-        for (int i = 0; i < numRoadsOnScreen; i++)
+        for (int i = 0; i < numPlatsOnScreen; i++)
         {
             if (i < 2)
-                SpawnRoad(0);
+                SpawnPlateform(0);
             else
-                SpawnRoad();
+                SpawnPlateform();
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (playerTransform.position.z - safeZone > (spawnZ - numRoadsOnScreen * plateformeLength))
+        if (playerTransform.position.z > (spawnZ - numPlatsOnScreen * plateformeLength))
         {
-            SpawnRoad();
-            DisableRoad();
+            SpawnPlateform();
+            DestoyPlateform();
         }
     }
 
-    private void SpawnRoad(int prefabIndex = -1)
+    private void SpawnPlateform(int prefabIndex = -1)
     {
         GameObject go;
         if (prefabIndex == -1)
@@ -46,23 +46,24 @@ public class PlateformeManager : MonoBehaviour
             go = Instantiate(plateformePrefabs[prefabIndex]);
 
         go.transform.SetParent(transform);
-        go.transform.position = new Vector3(0f, stairsHeight, spawnZ);
+        go.transform.position = new Vector3(spawnX, spawnY, spawnZ);
 
         // Randomize the position of the prefab
-        Vector3 randomOffset = new Vector3(Random.Range(-2f, 2f), 0f, 0f);
+        Vector3 randomOffset = new Vector3(Random.Range(-7f, 7f), 0f, 0f);
         go.transform.position += randomOffset;
 
         spawnZ += plateformeLength;
-        activeRoads.Add(go);
+        activePlateforms.Add(go);
 
-        stairsHeight += 1f;
+        spawnY += 1f;
+        spawnX += 3f;
     }
 
 
-    private void DisableRoad()
+    private void DestoyPlateform()
     {
-        Destroy(activeRoads[0], lifeSpan);
-        activeRoads.RemoveAt(0);
+        Destroy(activePlateforms[0], lifeSpan);
+        activePlateforms.RemoveAt(0);
     }
 
     private int RandomPrefabIndex()

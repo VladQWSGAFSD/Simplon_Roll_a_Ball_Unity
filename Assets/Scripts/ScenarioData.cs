@@ -13,6 +13,4 @@ public class ScenarioData : ScriptableObject
 {
     public GameObject WallePrefab;
     public List<WallsPositionRotation> Walls;
-
-
 }
