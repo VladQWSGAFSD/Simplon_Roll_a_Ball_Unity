@@ -151,7 +151,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &98606551
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1276,7 +1276,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 2d74b85e58e853a418fe4dbb8f061e10, type: 2}
     - target: {fileID: 7828021070035676227, guid: 0d522dccbaa8ea342b905bbb1c23d00c, type: 3}
       propertyPath: jumpForce
-      value: 10
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7828021070035676227, guid: 0d522dccbaa8ea342b905bbb1c23d00c, type: 3}
       propertyPath: scoreText

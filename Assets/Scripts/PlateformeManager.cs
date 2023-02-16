@@ -13,8 +13,6 @@ public class PlateformeManager : MonoBehaviour
     private List<GameObject> activePlateforms = new List<GameObject>();
     private int lifeSpan = 10;
 
-
-
     void Start()
     {
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
@@ -27,7 +25,6 @@ public class PlateformeManager : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (playerTransform.position.z > (spawnZ - numPlatsOnScreen * plateformeLength))
