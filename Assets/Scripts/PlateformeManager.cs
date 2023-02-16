@@ -46,7 +46,7 @@ public class PlateformeManager : MonoBehaviour
         go.transform.position = new Vector3(spawnX, spawnY, spawnZ);
 
         // Randomize the position of the prefab
-        Vector3 randomOffset = new Vector3(Random.Range(-7f, 7f), 0f, 0f);
+        Vector3 randomOffset = new Vector3(Random.Range(-7f, 4f), 0f, 0f);
         go.transform.position += randomOffset;
 
         spawnZ += plateformeLength;

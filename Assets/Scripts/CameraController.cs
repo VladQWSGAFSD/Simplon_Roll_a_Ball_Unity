@@ -1,34 +1,33 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class CameraController : MonoBehaviour
 {
-    private Transform lookAt;
-    private Vector3 startOffset;
-    private Vector3 moveVector;
+    [SerializeField] private Transform playerTransform;
+    [SerializeField] private float followSpeed = 5f;
+    [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private float distance = 10f;
 
-    private float transition = 0.0f;
-    private float animationDuration = 0f;
-    private Vector3 animationOffset = new Vector3(0, 5, 5);
+    private Vector2 moveInput;
 
-    void Start()
+    public void OnMove(InputValue value)
     {
-        lookAt = GameObject.FindGameObjectWithTag("Player").transform;
-        //lookAt = GetComponent<PlayerController>().transform;
-        startOffset = transform.position - lookAt.position;
+        moveInput = value.Get<Vector2>();
     }
 
-    void Update()
+    private void FixedUpdate()
     {
-        moveVector = lookAt.position + startOffset;
-        moveVector.y = 0;
-        moveVector.y = Mathf.Clamp(moveVector.y, 6, 12);
-        if (transition > 1.0f)
-            transform.position = lookAt.position + startOffset;
-        else
-            transform.position = Vector3.Lerp(moveVector + animationOffset, moveVector, transition);
-        transition += Time.deltaTime * 1 / animationDuration;
-        transform.LookAt(lookAt.position + Vector3.up);
+        Vector3 targetPos = playerTransform.position - transform.forward * distance;
+
+        // Apply movement based on input
+        Vector3 moveDirection = new Vector3(moveInput.x, 0f, moveInput.y).normalized;
+        if (moveDirection.magnitude > 0f)
+        {
+            targetPos += moveDirection * moveSpeed * Time.deltaTime;
+        }
+
+        // Smoothly move the camera towards the target position
+        Vector3 smoothPos = Vector3.Lerp(transform.position, targetPos, followSpeed * Time.deltaTime);
+        transform.position = smoothPos;
     }
 }
