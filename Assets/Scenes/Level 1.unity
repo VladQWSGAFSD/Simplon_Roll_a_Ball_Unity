@@ -401,7 +401,7 @@ GameObject:
   - component: {fileID: 562426053}
   - component: {fileID: 562426052}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Timer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -688,7 +688,7 @@ GameObject:
   - component: {fileID: 778244311}
   - component: {fileID: 778244310}
   m_Layer: 5
-  m_Name: Text (TMP) (1)
+  m_Name: NumDestroyEnemies
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -851,6 +851,19 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2440555233216487512, guid: 0d522dccbaa8ea342b905bbb1c23d00c, type: 3}
   m_PrefabInstance: {fileID: 1034470224}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &782628389
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 782628375}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df4393fa0e5752045a5ac023780eae95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scoreText: {fileID: 1785978938}
 --- !u!1 &848807122
 GameObject:
   m_ObjectHideFlags: 0
@@ -1292,7 +1305,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7828021070035676227, guid: 0d522dccbaa8ea342b905bbb1c23d00c, type: 3}
       propertyPath: speed
-      value: 50
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 7828021070035676227, guid: 0d522dccbaa8ea342b905bbb1c23d00c, type: 3}
       propertyPath: require
@@ -1642,7 +1655,7 @@ GameObject:
   - component: {fileID: 1785978939}
   - component: {fileID: 1785978938}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Score
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

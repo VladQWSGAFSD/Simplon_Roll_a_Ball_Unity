@@ -14,18 +14,11 @@ public class Player : MonoBehaviour
     private float movementX, movementY;
     [SerializeField] float jumpForce = 10f;
     [SerializeField] LayerMask groundLayer;
-
- 
     [SerializeField] float speed = 5.0f;
     [SerializeField] TMP_Text destroyText;
-
     [SerializeField] ScenarioData scenarioWalls;
 
     #region Events delegate
-    public delegate void ScoreEvent(int ScoreValue);
-    public static event ScoreEvent OnUpdate;
-    public delegate void SceneEvent(int destroyedEnemies, int requiredEnemies);
-    public static event SceneEvent OnScene;
     #endregion
     void Start()
     {
@@ -48,7 +41,6 @@ public class Player : MonoBehaviour
             Vector3 jumpVelocity = _rigidbody.velocity;
             jumpVelocity.y = jumpForce;
             _rigidbody.velocity = jumpVelocity;
-
         }
     }
     bool IsGrounded()
