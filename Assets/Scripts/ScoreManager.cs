@@ -22,15 +22,16 @@ public class ScoreManager : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Target"))
+        if (collision.gameObject.CompareTag("Target") && !collidedTargets.ContainsKey(collision.gameObject))
         {
-            if (!collidedTargets.ContainsKey(collision.gameObject))
-            {
+          
                 collidedTargets[collision.gameObject] = true;
                 ChangeScore();
-            }
-            Destroy(collision.gameObject, lifeSpan);
-            scoreText.text = "Score: " + _scoreValue;
+                scoreText.text = "Score: " + _scoreValue;
+                Destroy(collision.gameObject, lifeSpan);
+            
+            
+
         }
     }
 

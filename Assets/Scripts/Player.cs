@@ -7,10 +7,7 @@ using UnityEngine.InputSystem;
 public class Player : MonoBehaviour
 {
     private Rigidbody _rigidbody;
-
-
-
-
+    bool grounded = false;
     private float movementX, movementY;
     [SerializeField] float jumpForce = 10f;
     [SerializeField] LayerMask groundLayer;
@@ -45,14 +42,19 @@ public class Player : MonoBehaviour
     }
     bool IsGrounded()
     {
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, Vector3.down, out hit, 0.6f, groundLayer))
-        {
-            return true;
-        }
-        return false;
-        
+        return grounded;
     }
+    void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.CompareTag("Target"))
+            grounded = true;
+    }
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Target"))
+            grounded = false;
+    }
+
     private void OnMove(InputValue movementValue)
     {
         Vector2 movementVector = movementValue.Get<Vector2>();
