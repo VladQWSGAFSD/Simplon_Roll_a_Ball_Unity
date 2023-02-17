@@ -7,10 +7,10 @@ using UnityEngine.InputSystem;
 public class Player : MonoBehaviour
 {
     private Rigidbody _rigidbody;
-    private int _scoreValue = 0;
-    private int _destroyedEnemies = 0;
-    private int _enemiesToDestroy = 10;
-    private float lifeSpan = 10f;
+
+
+
+
     private float movementX, movementY;
     [SerializeField] float jumpForce = 10f;
     [SerializeField] LayerMask groundLayer;
@@ -18,7 +18,7 @@ public class Player : MonoBehaviour
  
     [SerializeField] float speed = 5.0f;
     [SerializeField] TMP_Text destroyText;
-    [SerializeField] TMP_Text scoreText;
+
     [SerializeField] ScenarioData scenarioWalls;
 
     #region Events delegate
@@ -29,15 +29,7 @@ public class Player : MonoBehaviour
     #endregion
     void Start()
     {
-        if (SceneManager.GetActiveScene().buildIndex != 0)
-        {
-            _scoreValue = PlayerPrefs.GetInt("Score");
-            _enemiesToDestroy = PlayerPrefs.GetInt("Require");
-        }
         _rigidbody = GetComponent<Rigidbody>();
-        destroyText.text = "You need to destroy " + _enemiesToDestroy + " enemies";
-        scoreText.text = "Score: " + _scoreValue;
-
     }
 
     void Update()
@@ -45,23 +37,6 @@ public class Player : MonoBehaviour
         ContinuousJump();
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Target"))
-        {
-            ChangeScore();
-            OnUpdate?.Invoke(_scoreValue);
-            scoreText.text = "Score: " + _scoreValue;
-          //  OnScene?.Invoke(_destroyedEnemies, _enemiesToDestroy);
-            Destroy(collision.gameObject, lifeSpan);
-        }
-    }
-   
-    private void ChangeScore()
-    {
-        _scoreValue++;
-        _destroyedEnemies++;
-    }
     //private void AddWall()
     //{
     //    Instantiate(scenarioWalls.WallePrefab, scenarioWalls.Walls[_destroyedEnemies].position, scenarioWalls.Walls[_destroyedEnemies].rotation);
