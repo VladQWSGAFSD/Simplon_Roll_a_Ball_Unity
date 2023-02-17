@@ -7,11 +7,12 @@ using UnityEngine.InputSystem;
 public class Player : MonoBehaviour
 {
     private Rigidbody _rigidbody;
-    bool grounded = false;
     private float movementX, movementY;
+    bool grounded = false;
+    
     [SerializeField] float jumpForce = 10f;
     [SerializeField] LayerMask groundLayer;
-    [SerializeField] float speed = 5.0f;
+    [SerializeField] float speed = 20.0f;
     [SerializeField] TMP_Text destroyText;
     [SerializeField] ScenarioData scenarioWalls;
 
@@ -27,10 +28,6 @@ public class Player : MonoBehaviour
         ContinuousJump();
     }
 
-    //private void AddWall()
-    //{
-    //    Instantiate(scenarioWalls.WallePrefab, scenarioWalls.Walls[_destroyedEnemies].position, scenarioWalls.Walls[_destroyedEnemies].rotation);
-    //}
     void ContinuousJump()
     {
         if (IsGrounded())

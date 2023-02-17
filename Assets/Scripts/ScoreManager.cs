@@ -6,7 +6,8 @@ using TMPro;
 public class ScoreManager : MonoBehaviour
 {
     private int _scoreValue = 0;
-    private float lifeSpan = 10;
+    [Tooltip("Adjust the life span of a platforme when player gets in collision with it. Wheater player gets in a collision or not plateform will be distroyed in 10 secs.")]
+    [SerializeField] float lifeSpan = 7;
     private Dictionary<GameObject, bool> collidedTargets = new Dictionary<GameObject, bool>();
 
     [SerializeField] TMP_Text scoreText;
@@ -14,9 +15,7 @@ public class ScoreManager : MonoBehaviour
     void Start()
     {
         if (SceneManager.GetActiveScene().buildIndex != 0)
-        {
             _scoreValue = PlayerPrefs.GetInt("Score");
-        }
         scoreText.text = "Score: " + _scoreValue;
     }
 
@@ -24,14 +23,10 @@ public class ScoreManager : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Target") && !collidedTargets.ContainsKey(collision.gameObject))
         {
-          
                 collidedTargets[collision.gameObject] = true;
                 ChangeScore();
                 scoreText.text = "Score: " + _scoreValue;
                 Destroy(collision.gameObject, lifeSpan);
-            
-            
-
         }
     }
 
@@ -40,4 +35,18 @@ public class ScoreManager : MonoBehaviour
         _scoreValue++;
         PlayerPrefs.SetInt("Score", _scoreValue);
     }
+
+    public void PunishScore()
+    {
+        if (_scoreValue >= 4)
+        {
+            _scoreValue -= 4;
+        }
+        else
+        {
+            _scoreValue = 0;
+        }
+        PlayerPrefs.SetInt("Score", _scoreValue);
+    }
+
 }

@@ -3,18 +3,22 @@ using UnityEngine;
 
 public class PlateformeManager : MonoBehaviour
 {
-    public GameObject[] plateformePrefabs;
-    private Transform playerTransform;
+    [SerializeField] GameObject[] plateformePrefabs;
+
     private float spawnZ, spawnY, spawnX = 0f;
     private float plateformeLength = 7f;
     private int numPlatsOnScreen = 4;
-   // private float safeZone = 0f;
     private int lastPrefabIndex = 0;
-    private List<GameObject> activePlateforms = new List<GameObject>();
     private int lifeSpan = 10;
+    private int numRespawns = 0;
+
+    private Transform playerTransform;
+    private List<GameObject> activePlateforms = new List<GameObject>();
+    private ScoreManager scoreManager;
 
     void Start()
     {
+        scoreManager = FindObjectOfType<ScoreManager>();
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         for (int i = 0; i < numPlatsOnScreen; i++)
         {
@@ -32,6 +36,7 @@ public class PlateformeManager : MonoBehaviour
             SpawnPlateform();
             DestoyPlateform();
         }
+        RespawnPlayer();
     }
 
     private void SpawnPlateform(int prefabIndex = -1)
@@ -49,11 +54,18 @@ public class PlateformeManager : MonoBehaviour
         Vector3 randomOffset = new Vector3(Random.Range(-7f, 4f), 0f, 0f);
         go.transform.position += randomOffset;
 
-        spawnZ += plateformeLength;
+        // Add random rotation between 0 and 180 to each platform except the first three
+        if (activePlateforms.Count >= 3)
+        {
+            Quaternion randomRotation = Quaternion.Euler(0f, Random.Range(0f, 180f), 0f);
+            go.transform.rotation = randomRotation;
+        } 
+        //casue of random rotation there could be a overlap if offset is an 0 for x, so adding one unit on top just in case
+        spawnZ += plateformeLength + 1f;
         activePlateforms.Add(go);
 
         spawnY += 1f;
-        spawnX += 3f;
+        spawnX += Random.Range(-3f, 3);
     }
 
 
@@ -76,5 +88,38 @@ public class PlateformeManager : MonoBehaviour
 
         lastPrefabIndex = randomIndex;
         return randomIndex;
+    }
+
+    private void RespawnPlayer()
+    {
+        // Find the platform below the player
+        int platformIndex = activePlateforms.FindIndex(p => p.transform.position.z > playerTransform.position.z);
+        if (platformIndex >= 0)
+        {
+            platformIndex = Mathf.Max(0, platformIndex - 1);
+        }
+        else
+        {
+            platformIndex = activePlateforms.Count - 1;
+        }
+        GameObject currentPlatform = activePlateforms[platformIndex];
+
+        // Respawn the player on the current platform if they fall below it
+        if (playerTransform.position.y < (currentPlatform.transform.position.y - 2f) && numRespawns <= 3)
+        {
+            playerTransform.position = new Vector3(
+                currentPlatform.transform.position.x,
+                currentPlatform.transform.position.y + 0.5f,
+                currentPlatform.transform.position.z
+            );
+            
+            numRespawns++;
+            Debug.Log("player respawned,number of respawns: " + numRespawns);
+            scoreManager.PunishScore();
+        }
+        else
+        {
+          //dead
+        }
     }
 }
