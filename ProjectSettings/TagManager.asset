@@ -3,10 +3,7 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-  - Target
-  - Target_Trigger
-  - Plateforme
+  tags: []
   layers:
   - Default
   - TransparentFX
@@ -14,15 +11,15 @@ TagManager:
   - 
   - Water
   - UI
-  - Ground
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - ActiveLines
+  - FlattenedLines
+  - Background
+  - Bins
+  - FlungTrash
+  - WorldBall
+  - Checkpoints
   - 
   - 
   - 
@@ -43,4 +40,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Trash
+    uniqueID: 2727232013
     locked: 0
