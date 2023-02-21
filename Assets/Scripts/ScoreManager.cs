@@ -33,7 +33,7 @@ public class ScoreManager : MonoBehaviour
     private void ChangeScore()
     {
         _scoreValue++;
-        PlayerPrefs.SetInt("Score", _scoreValue);
+        PlayerPrefs.GetInt("Score", _scoreValue);
     }
 
     public void PunishScore()
@@ -46,7 +46,7 @@ public class ScoreManager : MonoBehaviour
         {
             _scoreValue = 0;
         }
-        PlayerPrefs.SetInt("Score", _scoreValue);
+        PlayerPrefs.GetInt("Score", _scoreValue);
     }
 
 }

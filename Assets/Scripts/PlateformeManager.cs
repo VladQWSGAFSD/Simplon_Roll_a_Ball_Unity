@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlateformeManager : MonoBehaviour
 {
@@ -9,12 +10,15 @@ public class PlateformeManager : MonoBehaviour
     private float plateformeLength = 7f;
     private int numPlatsOnScreen = 4;
     private int lastPrefabIndex = 0;
-    private int lifeSpan = 10;
+    private int lifeSpan = 100;
     private int numRespawns = 0;
-
+    bool isDead = false;
     private Transform playerTransform;
     private List<GameObject> activePlateforms = new List<GameObject>();
     private ScoreManager scoreManager;
+
+    [SerializeField] string menuSceneName = "Level 2"; // Set the name of the menu scene in the inspector
+
 
     void Start()
     {
@@ -59,7 +63,7 @@ public class PlateformeManager : MonoBehaviour
         {
             Quaternion randomRotation = Quaternion.Euler(0f, Random.Range(0f, 180f), 0f);
             go.transform.rotation = randomRotation;
-        } 
+        }
         //casue of random rotation there could be a overlap if offset is an 0 for x, so adding one unit on top just in case
         spawnZ += plateformeLength + 1f;
         activePlateforms.Add(go);
@@ -112,14 +116,17 @@ public class PlateformeManager : MonoBehaviour
                 currentPlatform.transform.position.y + 0.5f,
                 currentPlatform.transform.position.z
             );
-            
+
+
             numRespawns++;
             Debug.Log("player respawned,number of respawns: " + numRespawns);
             scoreManager.PunishScore();
         }
         else
         {
-          //dead
+            //isDead = true;
+            //playerTransform.gameObject.SetActive(false); // Disable the player game object
+            //SceneManager.LoadScene(menuSceneName); // Load the menu scene
         }
     }
 }

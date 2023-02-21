@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
     bool grounded = false;
     
     [SerializeField] float jumpForce = 10f;
-    [SerializeField] LayerMask groundLayer;
+    //[SerializeField] LayerMask groundLayer;
     [SerializeField] float speed = 20.0f;
     [SerializeField] TMP_Text destroyText;
     [SerializeField] ScenarioData scenarioWalls;
