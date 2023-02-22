@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using TMPro;
 public class PlateformeManager : MonoBehaviour
 {
     [SerializeField] GameObject[] plateformePrefabs;
@@ -10,9 +10,9 @@ public class PlateformeManager : MonoBehaviour
     private float plateformeLength = 7f;
     private int numPlatsOnScreen = 4;
     private int lastPrefabIndex = 0;
-    private int lifeSpan = 100;
+    private float lifeSpan = 30f;
     private int numRespawns = 0;
-    bool isDead = false;
+    //bool isDead = false;
     private Transform playerTransform;
     private List<GameObject> activePlateforms = new List<GameObject>();
     private ScoreManager scoreManager;

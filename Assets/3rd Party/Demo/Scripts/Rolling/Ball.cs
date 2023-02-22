@@ -55,7 +55,7 @@ namespace InputSamples.Demo.Rolling
         private float jumpTimer;
         private float lastTouchedFriction;
         [SerializeField]
-        private float jumpForce = 5.0f; // The force applied to the ball when it jumps
+        private float jumpForce = 5.0f; 
 
         [SerializeField]
         private float timeToJumpApex = 0.4f; // The time it takes for the ball to reach the peak of its jump
