@@ -17,7 +17,7 @@ public class PlateformeManager : MonoBehaviour
     private List<GameObject> activePlateforms = new List<GameObject>();
     private ScoreManager scoreManager;
 
-    [SerializeField] string menuSceneName = "Level 2"; // Set the name of the menu scene in the inspector
+    [SerializeField] string menuSceneName = "Level 2"; // Set the name of the menu scene
 
 
     void Start()
@@ -41,6 +41,7 @@ public class PlateformeManager : MonoBehaviour
             DestoyPlateform();
         }
         RespawnPlayer();
+       // Die();
     }
 
     private void SpawnPlateform(int prefabIndex = -1)
@@ -55,7 +56,7 @@ public class PlateformeManager : MonoBehaviour
         go.transform.position = new Vector3(spawnX, spawnY, spawnZ);
 
         // Randomize the position of the prefab
-        Vector3 randomOffset = new Vector3(Random.Range(-7f, 4f), 0f, 0f);
+        Vector3 randomOffset = new Vector3(Random.Range(4f, 4f), 0f, 0f);
         go.transform.position += randomOffset;
 
         // Add random rotation between 0 and 180 to each platform except the first three
@@ -69,7 +70,7 @@ public class PlateformeManager : MonoBehaviour
         activePlateforms.Add(go);
 
         spawnY += 1f;
-        spawnX += Random.Range(-3f, 3);
+        spawnX += Random.Range(0, 1f);
     }
 
 
@@ -109,7 +110,7 @@ public class PlateformeManager : MonoBehaviour
         GameObject currentPlatform = activePlateforms[platformIndex];
 
         // Respawn the player on the current platform if they fall below it
-        if (playerTransform.position.y < (currentPlatform.transform.position.y - 2f) && numRespawns <= 3)
+        if (playerTransform.position.y < (currentPlatform.transform.position.y - 2f) && numRespawns <= 2)
         {
             playerTransform.position = new Vector3(
                 currentPlatform.transform.position.x,
@@ -128,5 +129,13 @@ public class PlateformeManager : MonoBehaviour
             //playerTransform.gameObject.SetActive(false); // Disable the player game object
             //SceneManager.LoadScene(menuSceneName); // Load the menu scene
         }
+    }
+    private void Die()
+    {
+        if (playerTransform.position.y <= -10f)
+        {
+            playerTransform.gameObject.SetActive(false);
+        }
+
     }
 }
