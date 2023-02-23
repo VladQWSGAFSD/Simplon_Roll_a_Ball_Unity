@@ -40,7 +40,10 @@ public class PlateformeManager : MonoBehaviour
             SpawnPlateform();
             DestoyPlateform();
         }
-        RespawnPlayer();
+        if (numRespawns <= 2)
+            RespawnPlayer();
+        else
+            SceneManager.LoadScene("Level 2");
        // Die();
     }
 
@@ -110,7 +113,7 @@ public class PlateformeManager : MonoBehaviour
         GameObject currentPlatform = activePlateforms[platformIndex];
 
         // Respawn the player on the current platform if they fall below it
-        if (playerTransform.position.y < (currentPlatform.transform.position.y - 2f) && numRespawns <= 2)
+        if (playerTransform.position.y < (currentPlatform.transform.position.y - 2f))
         {
             playerTransform.position = new Vector3(
                 currentPlatform.transform.position.x,
@@ -122,12 +125,6 @@ public class PlateformeManager : MonoBehaviour
             numRespawns++;
             Debug.Log("player respawned,number of respawns: " + numRespawns);
             scoreManager.PunishScore();
-        }
-        else
-        {
-            //isDead = true;
-            //playerTransform.gameObject.SetActive(false); // Disable the player game object
-            //SceneManager.LoadScene(menuSceneName); // Load the menu scene
         }
     }
     private void Die()
